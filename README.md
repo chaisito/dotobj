@@ -1,2 +1,2 @@
-# obj-visualizer
-Online website to preview .obj files
+# dotobj
+A simple 3D model viewer
