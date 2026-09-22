@@ -2,14 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0" />
+
     <title>dotobj</title>
 </head>
 
 <body>
-    <div id="app"></div>
 
-    <script type="module" src="/src/main.ts"></script>
+    <header id="top-bar">
+        <div id="logo">
+            dotobj
+        </div>
+
+        <div id="top-bar-actions">
+            <button id="settings-button">
+                ⚙
+            </button>
+        </div>
+    </header>
+
+
+    <aside id="sidebar">
+
+        <section class="sidebar-section">
+
+            <h2>SCENE</h2>
+
+            <div id="model-info">
+
+                <div class="model-empty">
+                    No model loaded
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="sidebar-section">
+
+            <h2>VIEW</h2>
+
+            <label class="control">
+                <input type="checkbox"
+                       id="grid-toggle"
+                       checked />
+
+                <span>Grid</span>
+            </label>
+
+            <label class="control">
+                <input type="checkbox"
+                       id="axes-toggle" />
+
+                <span>Axes</span>
+            </label>
+
+            <label class="control">
+                <input type="checkbox"
+                       id="wireframe-toggle" />
+
+                <span>Wireframe</span>
+            </label>
+
+        </section>
+
+
+        <section class="sidebar-section">
+
+            <h2>ENVIRONMENT</h2>
+
+            <div class="theme-buttons">
+
+                <button id="dark-theme"
+                        class="theme-button active">
+                    Dark
+                </button>
+
+                <button id="light-theme"
+                        class="theme-button">
+                    Light
+                </button>
+
+            </div>
+
+        </section>
+
+    </aside>
+
+
+    <main id="app"></main>
+
+
+    <div id="drop-zone">
+        Drop an OBJ file here
+    </div>
+
+
+    <script type="module"
+            src="/src/main.ts"></script>
+
 </body>
 </html>

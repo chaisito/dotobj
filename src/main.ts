@@ -1,126 +1,290 @@
-<<<<<<< HEAD
 import './style.css';
+
 import { Viewer } from './viewer/Viewer';
+import type { ModelInfo } from './viewer/Viewer';
 
-const app = document.querySelector<HTMLDivElement>(
-    '#app'
-);
-=======
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-import './style.css';
-
-const app = document.querySelector<HTMLDivElement>('#app');
->>>>>>> d16576df62aec1dcfd242998afdbdee3c6b80bb9
+const app =
+    document.querySelector<HTMLDivElement>(
+        '#app'
+    );
 
 if (!app) {
-    throw new Error('Could not find #app');
-}
-
-<<<<<<< HEAD
-const viewer = new Viewer(app);
-=======
-// Scene
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x111111);
-
-// Camera
-const camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
-
-camera.position.set(3, 3, 3);
-
-// Renderer
-const renderer = new THREE.WebGLRenderer({
-    antialias: true
-});
-
-renderer.setPixelRatio(
-    Math.min(window.devicePixelRatio, 2)
-);
-
-renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
-);
-
-app.appendChild(renderer.domElement);
-
-// Lights
-const ambientLight = new THREE.AmbientLight(
-    0xffffff,
-    2
-);
-
-scene.add(ambientLight);
-
-const directionalLight = new THREE.DirectionalLight(
-    0xffffff,
-    3
-);
-
-directionalLight.position.set(5, 5, 5);
-
-scene.add(directionalLight);
-
-// Cube
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-
-const material = new THREE.MeshStandardMaterial({
-    color: 0x6699ff
-});
-
-const cube = new THREE.Mesh(
-    geometry,
-    material
-);
-
-scene.add(cube);
-
-// Grid
-const grid = new THREE.GridHelper(10, 10);
-
-scene.add(grid);
-
-// Axes
-const axes = new THREE.AxesHelper(3);
-
-scene.add(axes);
-
-// Controls
-const controls = new OrbitControls(
-    camera,
-    renderer.domElement
-);
-
-controls.enableDamping = true;
-
-// Resize
-window.addEventListener('resize', () => {
-    camera.aspect =
-        window.innerWidth / window.innerHeight;
-
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(
-        window.innerWidth,
-        window.innerHeight
+    throw new Error(
+        'Could not find #app'
     );
-});
-
-// Render loop
-function animate() {
-    requestAnimationFrame(animate);
-
-    controls.update();
-
-    renderer.render(scene, camera);
 }
 
-animate();
->>>>>>> d16576df62aec1dcfd242998afdbdee3c6b80bb9
+
+const viewer =
+    new Viewer(app);
+
+
+//yu ai
+
+const gridToggle =
+    document.querySelector<HTMLInputElement>(
+        '#grid-toggle'
+    );
+
+const axesToggle =
+    document.querySelector<HTMLInputElement>(
+        '#axes-toggle'
+    );
+
+const wireframeToggle =
+    document.querySelector<HTMLInputElement>(
+        '#wireframe-toggle'
+    );
+
+const darkTheme =
+    document.querySelector<HTMLButtonElement>(
+        '#dark-theme'
+    );
+
+const lightTheme =
+    document.querySelector<HTMLButtonElement>(
+        '#light-theme'
+    );
+
+const modelInfo =
+    document.querySelector<HTMLDivElement>(
+        '#model-info'
+    );
+
+
+//km la cancion del ye, tekueme ye
+
+gridToggle?.addEventListener(
+    'change',
+    () => {
+
+        viewer.setGridVisible(
+            gridToggle.checked
+        );
+    }
+);
+
+axesToggle?.addEventListener(
+    'change',
+    () => {
+
+        viewer.setAxesVisible(
+            axesToggle.checked
+        );
+    }
+);
+
+wireframeToggle?.addEventListener(
+    'change',
+    () => {
+
+        viewer.setWireframeVisible(
+            wireframeToggle.checked
+        );
+    }
+);
+
+// =========================
+// Dark theme
+// =========================
+
+darkTheme?.addEventListener(
+    'click',
+    () => {
+
+        viewer.setTheme(
+            'dark'
+        );
+
+        darkTheme.classList.add(
+            'active'
+        );
+
+        lightTheme?.classList.remove(
+            'active'
+        );
+    }
+);
+
+
+//olivedelights
+
+lightTheme?.addEventListener(
+    'click',
+    () => {
+
+        viewer.setTheme(
+            'light'
+        );
+
+        lightTheme.classList.add(
+            'active'
+        );
+
+        darkTheme?.classList.remove(
+            'active'
+        );
+    }
+);
+
+
+//el drag
+
+let dragCounter = 0;
+
+
+document.addEventListener(
+    'dragenter',
+    (event) => {
+
+        event.preventDefault();
+
+        dragCounter++;
+
+        document.body.classList.add(
+            'dragging'
+        );
+    }
+);
+
+
+document.addEventListener(
+    'dragover',
+    (event) => {
+
+        event.preventDefault();
+    }
+);
+
+
+document.addEventListener(
+    'dragleave',
+    (event) => {
+
+        event.preventDefault();
+
+        dragCounter--;
+
+        if (dragCounter <= 0) {
+
+            dragCounter = 0;
+
+            document.body.classList.remove(
+                'dragging'
+            );
+        }
+    }
+);
+
+
+document.addEventListener(
+    'drop',
+    (event) => {
+
+        event.preventDefault();
+
+        dragCounter = 0;
+
+        document.body.classList.remove(
+            'dragging'
+        );
+
+
+        const file =
+            event.dataTransfer?.files[0];
+
+        if (!file) {
+            return;
+        }
+
+
+        if (
+            !file.name
+                .toLowerCase()
+                .endsWith('.obj')
+        ) {
+
+            console.warn(
+                'Only OBJ files are currently supported.'
+            );
+
+            return;
+        }
+
+
+        // updatear el yu ai
+
+        viewer.loadFile(
+            file,
+            (info) => {
+
+                displayModelInfo(
+                    file.name,
+                    info
+                );
+            }
+        );
+
+        // lodear el modelo
+
+        viewer.loadFile(file);
+
+        //modelinfo
+        function displayModelInfo(
+            fileName: string,
+            info: ModelInfo
+        ) {
+
+            if (!modelInfo) {
+                return;
+            }
+
+            modelInfo.innerHTML = `
+        <div class="model-name">
+            ${fileName}
+        </div>
+
+        <div class="model-stat">
+            <span>Vertices</span>
+            <span>${info.vertices.toLocaleString()}</span>
+        </div>
+
+        <div class="model-stat">
+            <span>Triangles</span>
+            <span>${Math.round(info.triangles).toLocaleString()}</span>
+        </div>
+
+        <div class="model-stat">
+            <span>Materials</span>
+            <span>${info.materials}</span>
+        </div>
+
+        <div class="model-stat">
+            <span>Dimensions</span>
+            <span>
+                ${formatDimension(info.width)} ×
+                ${formatDimension(info.height)} ×
+                ${formatDimension(info.depth)}
+            </span>
+        </div>
+        `;
+        }
+
+        //dimensionesss
+        function formatDimension(
+            value: number
+        ): string {
+
+            if (value >= 100) {
+                return value.toFixed(1);
+            }
+
+            if (value >= 10) {
+                return value.toFixed(2);
+            }
+
+            return value.toFixed(3);
+        }
+
+    }
+);

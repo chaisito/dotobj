@@ -12,13 +12,206 @@ body {
 
 body {
     background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
 }
 
+
+/* tap bar */
+
+#top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: #181818;
+    border-bottom: 1px solid #292929;
+    z-index: 10;
+}
+
+#logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+}
+
+#settings-button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #aaa;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+    #settings-button:hover {
+        background: #252525;
+        color: white;
+    }
+
+
+/* saidbar */
+
+#sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 230px;
+    padding: 20px 16px;
+    background: #181818;
+    border-right: 1px solid #292929;
+    z-index: 5;
+}
+
+.sidebar-section {
+    margin-bottom: 28px;
+}
+
+    .sidebar-section h2 {
+        margin: 0 0 12px 0;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #777;
+    }
+
+#model-info {
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: #202020;
+    color: #aaa;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/*jc en lo controle nega*/
+
+.control {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 4px;
+    color: #ccc;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+    .control:hover {
+        color: white;
+    }
+
+    .control input {
+        accent-color: white;
+    }
+
+
+/*botones de los temas serios*/
+
+.theme-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.theme-button {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #303030;
+    border-radius: 6px;
+    background: #202020;
+    color: #999;
+    cursor: pointer;
+}
+
+    .theme-button:hover {
+        color: white;
+    }
+
+    .theme-button.active {
+        background: #303030;
+        color: white;
+    }
+
+
+/*viuer*/
+
 #app {
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    top: 56px;
+    left: 230px;
+    right: 0;
+    bottom: 0;
 }
 
 canvas {
     display: block;
+}
+
+
+/*ZONA DE DROPEOOO*/
+
+#drop-zone {
+    position: fixed;
+    inset: 56px 0 0 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 20;
+}
+
+body.dragging #drop-zone {
+    opacity: 1;
+}
+
+/*to lo del modelo y esas cosas (ME VOY A MATAR)*/
+
+.model-name {
+    margin-bottom: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.model-stat {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid #292929;
+    font-size: 11px;
+}
+
+    .model-stat span:first-child {
+        color: #777;
+    }
+
+    .model-stat span:last-child {
+        color: #ccc;
+        text-align: right;
+    }
+
+.model-empty {
+    color: #777;
+    font-size: 12px;
 }
